@@ -20,16 +20,29 @@ $configurator = Slalom::start(new Configurator)
         ->serverNameIs('localhost')
         ->andContinue()
     ->when()
-        ->serverNameIsIn(['localhost', 'farhost'])
+        ->serverNameIsIn(['localhost', 'production-server.com'])
+        ->execute(function ($configurator) {
+            // do something
+        })
         ->andContinue()
     ->when()
-        ->serverNameNotMatches('^ocalhost$')
+        ->requestUriStarts('/img/')
+        ->execute(function ($configurator) {
+            $configurator->handleImages();
+        })
+    ->when()
+        ->requestUriIs('/upload')
+        ->methodIs('POST')
+        ->skip(file_exists('uploaded.file'))
+        ->execute(function ($configurator) {
+            // do something
+        })
     ->otherwise()
         ->throw(new \Exception('Wrong server host.'))
     ->finally()
         ->execute(
             function ($configurator) {
-
+                // do something
             }
         )
     ->run();
