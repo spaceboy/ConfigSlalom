@@ -5,19 +5,19 @@ namespace Spaceboy\ConfigSlalom;
 class Slalom
 {
     /** @var Configurator */
-    private $configurator;
+    protected   $configurator;
 
     /** @var array of ConfigSegment */
-    private $chain  = array();
+    protected   $chain  = array();
 
     /** @var ConfigSegment */
-    private $active;
+    protected   $active;
 
     /** @var ConfigSegment */
-    private $otherwise;
+    protected   $otherwise;
 
     /** @var ConfigSegment */
-    private $finally;
+    protected   $finally;
 
     protected function __construct($configurator)
     {
