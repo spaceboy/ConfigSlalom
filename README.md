@@ -182,52 +182,72 @@ $configurator = Slalom::start(new Configurator)
 - ### `phpVersionIs(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionIsNot(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *not* `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *not* `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionIsIn(integer[] $phpVersions): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is in `$phpVersions`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is in `$phpVersions`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionNotIn(integer[] $phpVersions): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *not* in `$phpVersions`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *not* in `$phpVersions`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionLT(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *less* than `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *less* than `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionLE(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *less or equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *less or equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionEQ(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionNE(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *not equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *not equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionGE(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *greater or equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *greater or equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
 
 - ### `phpVersionGT(integer $phpVersion): ConfigSlalom`
   Adds condition.
 
-  If current protocol version of PHP (`PHP_VERSION_ID`) is *greater* than `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+  If current version of PHP (`PHP_VERSION_ID`) is *greater* than `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpSapiIs(string $sapi): ConfigSlalom`
+  Adds condition.
+
+  If current Server API for this build of PHP (`PHP_SAPI`) is equal to `$sapi`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`).
+
+- ### `phpSapiIsNot(string $sapi): ConfigSlalom`
+  Adds condition.
+
+  If current Server API for this build of PHP (`PHP_SAPI`) is *not* equal to `$sapi`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`).
+
+- ### `phpSapiIsIn(string[] $sapi): ConfigSlalom`
+  Adds condition.
+
+  If current Server API for this build of PHP (`PHP_SAPI`) is in `$sapi`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`).
+
+- ### `phpSapiIsNotIn(string[] $sapi): ConfigSlalom`
+  Adds condition.
+
+  If current Server API for this build of PHP (`PHP_SAPI`) is *not* in `$sapi`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`).
 
 - ### `andContinue(): ConfigSlalom`
   Directive.

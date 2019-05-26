@@ -464,6 +464,54 @@ class Slalom
     }
 
     /**
+     * @param string $sapi
+     * @return Slalom
+     */
+    public function phpSapiIs($sapi)
+    {
+        $this->active->condition[]  = function () use ($sapi) {
+            return (PHP_SAPI == $sapi);
+        };
+        return $this;
+    }
+
+    /**
+     * @param string $sapi
+     * @return Slalom
+     */
+    public function phpSapiIsNot($sapi)
+    {
+        $this->active->condition[]  = function () use ($sapi) {
+            return (PHP_SAPI != $sapi);
+        };
+        return $this;
+    }
+
+    /**
+     * @param string[] $sapi
+     * @return Slalom
+     */
+    public function phpSapiIsIn($sapi)
+    {
+        $this->active->condition[]  = function () use ($sapi) {
+            return in_array(PHP_SAPI, $sapi);
+        };
+        return $this;
+    }
+
+    /**
+     * @param string[] $sapi
+     * @return Slalom
+     */
+    public function phpSapiNotIn($sapi)
+    {
+        $this->active->condition[]  = function () use ($sapi) {
+            return !in_array(PHP_SAPI, $sapi);
+        };
+        return $this;
+    }
+
+    /**
      * @return Slalom
      */
     public function andContinue()
