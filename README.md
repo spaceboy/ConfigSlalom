@@ -137,6 +137,8 @@ $configurator = Slalom::start(new Configurator)
 
   If result of `$callable`) is boolean true, continue. If not, continue to next opinion (next `when`, `otherwise` or `finally`).
 
+  `$callable` expects 1 parameter: `$configurator`.
+
 - ### `portIs(string $port): ConfigSlalom`
   Adds condition.
 
@@ -177,6 +179,56 @@ $configurator = Slalom::start(new Configurator)
 
   If current protocol (`$_SERVER['SERVER_PORT']`) is *not* in `$protocolArray`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`).
 
+- ### `phpVersionIs(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionIsNot(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *not* `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionIsIn(integer[] $phpVersions): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is in `$phpVersions`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionNotIn(integer[] $phpVersions): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *not* in `$phpVersions`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionLT(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *less* than `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionLE(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *less or equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionEQ(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionNE(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *not equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionGE(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *greater or equal* to `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
+- ### `phpVersionGT(integer $phpVersion): ConfigSlalom`
+  Adds condition.
+
+  If current protocol version of PHP (`PHP_VERSION_ID`) is *greater* than `$phpVersion`, continue. Otherwise continue to next opinion (next `when`, `otherwise` or `finally`). Argument `$phpVersion` is integer, in `PHP_VERSION_ID` constant format (eg. 50207 for PHP 5.2.7).
+
 - ### `andContinue(): ConfigSlalom`
   Directive.
 
@@ -208,3 +260,6 @@ $configurator = Slalom::start(new Configurator)
   Executes whole "slalom"; without this method, nothing will be done.
 
   Returns `$configurator` passed in `start()` method.
+
+  ## Possible conflicts:
+  For PHP versions before "5.2.7-extra" defines constant `PHP_VERSION_ID`. So if you define constant `PHP_VERSION_ID` *after* `ConfigSlalom` include, you can experience a conflict.

@@ -2,6 +2,11 @@
 
 namespace Spaceboy\ConfigSlalom;
 
+if (!defined('PHP_VERSION_ID')) {
+    $v = explode('.', PHP_VERSION);
+    define('PHP_VERSION_ID', ($v[0] * 10000) + ($v[1] * 100) + $v[2]);
+}
+
 class Slalom
 {
     /** @var Configurator */
@@ -235,7 +240,10 @@ class Slalom
      */
     public function isTrue($callable)
     {
-        $this->active->condition[]  = $callable;
+        $configurator   = $this->configurator;
+        $this->active->condition[]  = function () use ($callable, $configurator) {
+            return call_user_func_array($callable, array($configurator));
+        };
         return $this;
     }
 
@@ -331,6 +339,126 @@ class Slalom
     {
         $this->active->condition[]  = function () use ($protocols) {
             return !in_array($_SERVER['SERVER_PROTOCOL'], $protocols);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionIs($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID == $phpVersion);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionIsNot($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID != $phpVersion);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer[] $phpVersions
+     * @return Slalom
+     */
+    public function phpVersionIsIn($phpVersions)
+    {
+        $this->active->condition[]  = function () use ($phpVersions) {
+            return in_array(PHP_VERSION_ID, $phpVersions);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer[] $phpVersions
+     * @return Slalom
+     */
+    public function phpVersionIsNotIn($phpVersions)
+    {
+        $this->active->condition[]  = function () use ($phpVersions) {
+            return !in_array(PHP_VERSION_ID, $phpVersions);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionBG($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID > $phpVersion);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionBE($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID >= $phpVersion);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionEQ($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID == $phpVersion);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionNE($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID != $phpVersion);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionLE($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID <= $phpVersion);
+        };
+        return $this;
+    }
+
+    /**
+     * @param integer $phpVersion
+     * @return Slalom
+     */
+    public function phpVersionLT($phpVersion)
+    {
+        $this->active->condition[]  = function () use ($phpVersion) {
+            return (PHP_VERSION_ID < $phpVersion);
         };
         return $this;
     }
