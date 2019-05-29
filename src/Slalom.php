@@ -24,6 +24,13 @@ class Slalom
     /** @var ConfigSegment */
     protected   $finally;
 
+    /** @var boolean */
+    protected   $apply;
+
+    /**
+     * Slalom class constructor.
+     * @param mixed $configurator
+     */
     protected function __construct($configurator)
     {
         $this->configurator = $configurator;
@@ -38,31 +45,43 @@ class Slalom
     }
 
     /**
+     * DIRECTIVE: Starts new clause.
+     * @param bool $apply [=TRUE]
      * @return Slalom
      */
-    public function when()
+    public function when($apply = TRUE)
     {
-        $this->chain[]  = $this->active = new ConfigSegment();
+        if ($this->apply = $apply) {
+            $this->chain[]  = $this->active = new ConfigSegment();
+        }
         return $this;
     }
 
     /**
+     * DIRECTIVE: Starts "otherwise" clause
+     * @param bool $apply [=TRUE]
      * @return Slalom
      */
-    public function otherwise()
+    public function otherwise($apply = TRUE)
     {
-        $this->when();
-        $this->active->isOtherwise  = TRUE;
+        if ($this->apply = $apply) {
+            $this->when($apply);
+            $this->active->isOtherwise  = TRUE;
+        }
         return $this;
     }
 
     /**
+     * DIRECTIVE: Starts "finally" clause
+     * @param bool $apply [=TRUE]
      * @return Slalom
      */
-    public function finally()
+    public function finally($apply = TRUE)
     {
-        $this->when();
-        $this->active->isFinally    = TRUE;
+        if ($this->apply = $apply) {
+            $this->when($apply);
+            $this->active->isFinally    = TRUE;
+        }
         return $this;
     }
 
@@ -72,9 +91,11 @@ class Slalom
      */
     public function serverNameIs($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return ($name === $_SERVER['SERVER_NAME']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return ($name === $_SERVER['SERVER_NAME']);
+            };
+        }
         return $this;
     }
 
@@ -84,9 +105,11 @@ class Slalom
      */
     public function serverNameIsNot($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return ($name !== $_SERVER['SERVER_NAME']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return ($name !== $_SERVER['SERVER_NAME']);
+            };
+        }
         return $this;
     }
 
@@ -96,9 +119,11 @@ class Slalom
      */
     public function serverNameIsIn($names)
     {
-        $this->active->condition[]  = function () use ($names) {
-            return in_array($_SERVER['SERVER_NAME'], $names);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($names) {
+                return in_array($_SERVER['SERVER_NAME'], $names);
+            };
+        }
         return $this;
     }
 
@@ -108,9 +133,11 @@ class Slalom
      */
     public function serverNameNotIn($names)
     {
-        $this->active->condition[]  = function () use ($names) {
-            return !in_array($_SERVER['SERVER_NAME'], $names);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($names) {
+                return !in_array($_SERVER['SERVER_NAME'], $names);
+            };
+        }
         return $this;
     }
 
@@ -120,9 +147,11 @@ class Slalom
      */
     public function serverNameMatches($pattern)
     {
-        $this->active->condition[]  = function () use ($pattern) {
-            return (bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($pattern) {
+                return (bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']);
+            };
+        }
         return $this;
     }
 
@@ -132,9 +161,11 @@ class Slalom
      */
     public function serverNameNotMatches($pattern)
     {
-        $this->active->condition[]  = function () use ($pattern) {
-            return !(bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($pattern) {
+                return !(bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']);
+            };
+        }
         return $this;
     }
 
@@ -144,9 +175,11 @@ class Slalom
      */
     public function requestUriIs($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return ($name === $_SERVER['REQUEST_URI']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return ($name === $_SERVER['REQUEST_URI']);
+            };
+        }
         return $this;
     }
 
@@ -156,9 +189,11 @@ class Slalom
      */
     public function requestUriStarts($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return (0 === strpos($_SERVER['REQUEST_URI'], $name));
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return (0 === strpos($_SERVER['REQUEST_URI'], $name));
+            };
+        }
         return $this;
     }
 
@@ -168,9 +203,11 @@ class Slalom
      */
     public function requestUriContains($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return (FALSE !== strpos($_SERVER['REQUEST_URI'], $name));
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return (FALSE !== strpos($_SERVER['REQUEST_URI'], $name));
+            };
+        }
         return $this;
     }
 
@@ -180,9 +217,11 @@ class Slalom
      */
     public function requestUriNotContains($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return (FALSE === strpos($_SERVER['REQUEST_URI'], $name));
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return (FALSE === strpos($_SERVER['REQUEST_URI'], $name));
+            };
+        }
         return $this;
     }
 
@@ -192,9 +231,11 @@ class Slalom
      */
     public function requestMethodIs($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return ($name === $_SERVER['REQUEST_METHOD']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return ($name === $_SERVER['REQUEST_METHOD']);
+            };
+        }
         return $this;
     }
 
@@ -204,9 +245,11 @@ class Slalom
      */
     public function requestMethodIsNot($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return ($name !== $_SERVER['REQUEST_METHOD']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return ($name !== $_SERVER['REQUEST_METHOD']);
+            };
+        }
         return $this;
     }
 
@@ -216,9 +259,11 @@ class Slalom
      */
     public function requestMethodIsIn($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return in_array($_SERVER['REQUEST_METHOD'], $name);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return in_array($_SERVER['REQUEST_METHOD'], $name);
+            };
+        }
         return $this;
     }
 
@@ -228,9 +273,11 @@ class Slalom
      */
     public function requestMethodNotIn($name)
     {
-        $this->active->condition[]  = function () use ($name) {
-            return !in_array($_SERVER['REQUEST_METHOD'], $name);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($name) {
+                return !in_array($_SERVER['REQUEST_METHOD'], $name);
+            };
+        }
         return $this;
     }
 
@@ -240,10 +287,12 @@ class Slalom
      */
     public function isTrue($callable)
     {
-        $configurator   = $this->configurator;
-        $this->active->condition[]  = function () use ($callable, $configurator) {
-            return call_user_func_array($callable, array($configurator));
-        };
+        if ($this->apply) {
+            $configurator   = $this->configurator;
+            $this->active->condition[]  = function () use ($callable, $configurator) {
+                return call_user_func_array($callable, array($configurator));
+            };
+        }
         return $this;
     }
 
@@ -253,9 +302,11 @@ class Slalom
      */
     public function portIs($ports)
     {
-        $this->active->condition[]  = function () use ($port) {
-            return ($port == $_SERVER['SERVER_PORT']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($port) {
+                return ($port == $_SERVER['SERVER_PORT']);
+            };
+        }
         return $this;
     }
 
@@ -265,9 +316,11 @@ class Slalom
      */
     public function portIsNot($ports)
     {
-        $this->active->condition[]  = function () use ($port) {
-            return ($port != $_SERVER['SERVER_PORT']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($port) {
+                return ($port != $_SERVER['SERVER_PORT']);
+            };
+        }
         return $this;
     }
 
@@ -277,9 +330,11 @@ class Slalom
      */
     public function portIsIn($ports)
     {
-        $this->active->condition[]  = function () use ($ports) {
-            return in_array($_SERVER['SERVER_PORT'], $ports);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($ports) {
+                return in_array($_SERVER['SERVER_PORT'], $ports);
+            };
+        }
         return $this;
     }
 
@@ -289,9 +344,11 @@ class Slalom
      */
     public function portIsNotIn($ports)
     {
-        $this->active->condition[]  = function () use ($ports) {
-            return !in_array($_SERVER['SERVER_PORT'], $ports);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($ports) {
+                return !in_array($_SERVER['SERVER_PORT'], $ports);
+            };
+        }
         return $this;
     }
 
@@ -301,9 +358,11 @@ class Slalom
      */
     public function protocolIs($protocol)
     {
-        $this->active->condition[]  = function () use ($protocol) {
-            return ($protocol === $_SERVER['SERVER_PROTOCOL']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($protocol) {
+                return ($protocol === $_SERVER['SERVER_PROTOCOL']);
+            };
+        }
         return $this;
     }
 
@@ -313,9 +372,11 @@ class Slalom
      */
     public function protocolIsNot($ports)
     {
-        $this->active->condition[]  = function () use ($protocol) {
-            return ($protocol !== $_SERVER['SERVER_PROTOCOL']);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($protocol) {
+                return ($protocol !== $_SERVER['SERVER_PROTOCOL']);
+            };
+        }
         return $this;
     }
 
@@ -325,9 +386,11 @@ class Slalom
      */
     public function protocolIsIn($protocols)
     {
-        $this->active->condition[]  = function () use ($protocols) {
-            return in_array($_SERVER['SERVER_PROTOCOL'], $protocols);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($protocols) {
+                return in_array($_SERVER['SERVER_PROTOCOL'], $protocols);
+            };
+        }
         return $this;
     }
 
@@ -337,9 +400,11 @@ class Slalom
      */
     public function protocolIsNotIn($protocols)
     {
-        $this->active->condition[]  = function () use ($protocols) {
-            return !in_array($_SERVER['SERVER_PROTOCOL'], $protocols);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($protocols) {
+                return !in_array($_SERVER['SERVER_PROTOCOL'], $protocols);
+            };
+        }
         return $this;
     }
 
@@ -349,9 +414,11 @@ class Slalom
      */
     public function phpVersionIs($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID == $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID == $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -361,9 +428,11 @@ class Slalom
      */
     public function phpVersionIsNot($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID != $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID != $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -373,9 +442,11 @@ class Slalom
      */
     public function phpVersionIsIn($phpVersions)
     {
-        $this->active->condition[]  = function () use ($phpVersions) {
-            return in_array(PHP_VERSION_ID, $phpVersions);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersions) {
+                return in_array(PHP_VERSION_ID, $phpVersions);
+            };
+        }
         return $this;
     }
 
@@ -385,9 +456,11 @@ class Slalom
      */
     public function phpVersionIsNotIn($phpVersions)
     {
-        $this->active->condition[]  = function () use ($phpVersions) {
-            return !in_array(PHP_VERSION_ID, $phpVersions);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersions) {
+                return !in_array(PHP_VERSION_ID, $phpVersions);
+            };
+        }
         return $this;
     }
 
@@ -397,9 +470,11 @@ class Slalom
      */
     public function phpVersionBG($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID > $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID > $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -409,9 +484,11 @@ class Slalom
      */
     public function phpVersionBE($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID >= $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID >= $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -421,9 +498,11 @@ class Slalom
      */
     public function phpVersionEQ($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID == $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID == $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -433,9 +512,11 @@ class Slalom
      */
     public function phpVersionNE($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID != $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID != $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -445,9 +526,11 @@ class Slalom
      */
     public function phpVersionLE($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID <= $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID <= $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -457,9 +540,11 @@ class Slalom
      */
     public function phpVersionLT($phpVersion)
     {
-        $this->active->condition[]  = function () use ($phpVersion) {
-            return (PHP_VERSION_ID < $phpVersion);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($phpVersion) {
+                return (PHP_VERSION_ID < $phpVersion);
+            };
+        }
         return $this;
     }
 
@@ -469,9 +554,11 @@ class Slalom
      */
     public function phpSapiIs($sapi)
     {
-        $this->active->condition[]  = function () use ($sapi) {
-            return (PHP_SAPI == $sapi);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($sapi) {
+                return (PHP_SAPI == $sapi);
+            };
+        }
         return $this;
     }
 
@@ -481,9 +568,11 @@ class Slalom
      */
     public function phpSapiIsNot($sapi)
     {
-        $this->active->condition[]  = function () use ($sapi) {
-            return (PHP_SAPI != $sapi);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($sapi) {
+                return (PHP_SAPI != $sapi);
+            };
+        }
         return $this;
     }
 
@@ -493,9 +582,11 @@ class Slalom
      */
     public function phpSapiIsIn($sapi)
     {
-        $this->active->condition[]  = function () use ($sapi) {
-            return in_array(PHP_SAPI, $sapi);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($sapi) {
+                return in_array(PHP_SAPI, $sapi);
+            };
+        }
         return $this;
     }
 
@@ -505,39 +596,50 @@ class Slalom
      */
     public function phpSapiNotIn($sapi)
     {
-        $this->active->condition[]  = function () use ($sapi) {
-            return !in_array(PHP_SAPI, $sapi);
-        };
+        if ($this->apply) {
+            $this->active->condition[]  = function () use ($sapi) {
+                return !in_array(PHP_SAPI, $sapi);
+            };
+        }
         return $this;
     }
 
     /**
+     * DIRECTIVE
      * @return Slalom
      */
     public function andContinue()
     {
-        $this->active->continue = TRUE;
+        if ($this->apply) {
+            $this->active->continue     = TRUE;
+        }
         return $this;
     }
 
     /**
+     * DIRECTIVE
      * @param bool $skip
      * @return Slalom
      */
     public function skip($skip = TRUE)
     {
-        $this->active->skip     = (bool)$skip;
+        if ($this->apply) {
+            $this->active->skip         = (bool)$skip;
+        }
         return $this;
     }
 
     /**
+     * DIRECTIVE
      * @return Slalom
      */
     public function throw($throwable)
     {
-        $this->active->action[] = function () use ($throwable) {
-            throw $throwable;
-        };
+        if ($this->apply) {
+            $this->active->action[]     = function () use ($throwable) {
+                throw $throwable;
+            };
+        }
         return $this;
     }
 

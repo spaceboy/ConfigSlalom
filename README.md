@@ -55,12 +55,14 @@ $configurator = Slalom::start(new Configurator)
   
   Starts whole "slalom".
 
-- ### `when(): ConfigSlalom`
+- ### `when([bool $apply = TRUE]): ConfigSlalom`
   Directive.
   
   Starts an option.
 
   Use everytime you want to start new option with new set of condition(s).
+
+  When `$apply` is `TRUE` (or is not set), new option starts. Otherwise whole `when` clause is ignored.
 
 - ### `serverNameIs(string $serverName): ConfigSlalom`
   Adds condition.
@@ -267,7 +269,7 @@ $configurator = Slalom::start(new Configurator)
 - ### `skip([bool $skip = TRUE]): ConfigSlalom`
   Directive.
 
-  When `$skip` is `TRUE`, skip this clause and continue.
+  When `$skip` is `TRUE` (or not set), skip this clause and continue.
 
 - ### `execute(callable $callable[, mixed $args]): ConfigSlalom`
   Provides an action.
