@@ -93,7 +93,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return ($name === $_SERVER['SERVER_NAME']);
+                return (isset($_SERVER['SERVER_NAME']) && $name === $_SERVER['SERVER_NAME']);
             };
         }
         return $this;
@@ -107,7 +107,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return ($name !== $_SERVER['SERVER_NAME']);
+                return (isset($_SERVER['SERVER_NAME']) && $name !== $_SERVER['SERVER_NAME']);
             };
         }
         return $this;
@@ -121,7 +121,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($names) {
-                return in_array($_SERVER['SERVER_NAME'], $names);
+                return in_array(isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'], $names);
             };
         }
         return $this;
@@ -135,7 +135,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($names) {
-                return !in_array($_SERVER['SERVER_NAME'], $names);
+                return !in_array(isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'], $names);
             };
         }
         return $this;
@@ -149,7 +149,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($pattern) {
-                return (bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']);
+                return (isset($_SERVER['SERVER_NAME']) && (bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']));
             };
         }
         return $this;
@@ -163,7 +163,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($pattern) {
-                return !(bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']);
+                return (isset($_SERVER['SERVER_NAME']) && !(bool)preg_match("#{$pattern}#", $_SERVER['SERVER_NAME']));
             };
         }
         return $this;
@@ -177,7 +177,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return ($name === $_SERVER['REQUEST_URI']);
+                return (isset($_SERVER['REQUEST_URI']) && $name === $_SERVER['REQUEST_URI']);
             };
         }
         return $this;
@@ -191,7 +191,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return (0 === strpos($_SERVER['REQUEST_URI'], $name));
+                return (isset($_SERVER['REQUEST_URI']) && 0 === strpos($_SERVER['REQUEST_URI'], $name));
             };
         }
         return $this;
@@ -205,7 +205,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return (FALSE !== strpos($_SERVER['REQUEST_URI'], $name));
+                return (isset($_SERVER['REQUEST_URI']) && FALSE !== strpos($_SERVER['REQUEST_URI'], $name));
             };
         }
         return $this;
@@ -219,7 +219,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return (FALSE === strpos($_SERVER['REQUEST_URI'], $name));
+                return (isset($_SERVER['REQUEST_URI']) && FALSE === strpos($_SERVER['REQUEST_URI'], $name));
             };
         }
         return $this;
@@ -233,7 +233,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return ($name === $_SERVER['REQUEST_METHOD']);
+                return (isset($_SERVER['REQUEST_METHOD']) && $name === $_SERVER['REQUEST_METHOD']);
             };
         }
         return $this;
@@ -247,7 +247,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return ($name !== $_SERVER['REQUEST_METHOD']);
+                return (isset($_SERVER['REQUEST_METHOD']) && $name !== $_SERVER['REQUEST_METHOD']);
             };
         }
         return $this;
@@ -261,7 +261,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return in_array($_SERVER['REQUEST_METHOD'], $name);
+                return (isset($_SERVER['REQUEST_METHOD']) && in_array($_SERVER['REQUEST_METHOD'], $name));
             };
         }
         return $this;
@@ -275,7 +275,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($name) {
-                return !in_array($_SERVER['REQUEST_METHOD'], $name);
+                return (isset($_SERVER['REQUEST_METHOD']) && !in_array($_SERVER['REQUEST_METHOD'], $name));
             };
         }
         return $this;
@@ -304,7 +304,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($port) {
-                return ($port == $_SERVER['SERVER_PORT']);
+                return (isset($_SERVER['SERVER_PORT']) && $port == $_SERVER['SERVER_PORT']);
             };
         }
         return $this;
@@ -318,7 +318,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($port) {
-                return ($port != $_SERVER['SERVER_PORT']);
+                return (isset($_SERVER['SERVER_PORT']) && $port != $_SERVER['SERVER_PORT']);
             };
         }
         return $this;
@@ -332,7 +332,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($ports) {
-                return in_array($_SERVER['SERVER_PORT'], $ports);
+                return (isset($_SERVER['SERVER_PORT']) && in_array($_SERVER['SERVER_PORT'], $ports));
             };
         }
         return $this;
@@ -346,7 +346,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($ports) {
-                return !in_array($_SERVER['SERVER_PORT'], $ports);
+                return (isset($_SERVER['SERVER_PORT']) && !in_array($_SERVER['SERVER_PORT'], $ports));
             };
         }
         return $this;
@@ -360,7 +360,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($protocol) {
-                return ($protocol === $_SERVER['SERVER_PROTOCOL']);
+                return (isset($_SERVER['SERVER_PROTOCOL']) && $protocol === $_SERVER['SERVER_PROTOCOL']);
             };
         }
         return $this;
@@ -374,7 +374,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($protocol) {
-                return ($protocol !== $_SERVER['SERVER_PROTOCOL']);
+                return (isset($_SERVER['SERVER_PROTOCOL']) && $protocol !== $_SERVER['SERVER_PROTOCOL']);
             };
         }
         return $this;
@@ -388,7 +388,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($protocols) {
-                return in_array($_SERVER['SERVER_PROTOCOL'], $protocols);
+                return (isset($_SERVER['SERVER_PROTOCOL']) && in_array($_SERVER['SERVER_PROTOCOL'], $protocols));
             };
         }
         return $this;
@@ -402,7 +402,7 @@ class Slalom
     {
         if ($this->apply) {
             $this->active->condition[]  = function () use ($protocols) {
-                return !in_array($_SERVER['SERVER_PROTOCOL'], $protocols);
+                return (isset($_SERVER['SERVER_PROTOCOL']) && !in_array($_SERVER['SERVER_PROTOCOL'], $protocols));
             };
         }
         return $this;
